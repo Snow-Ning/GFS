@@ -1,11 +1,17 @@
 # Use pre-built image of ubuntu with bazel
+# It's better to download a image on the local disk, then you can use it by loading from disk instead of net
 FROM tugan0329/bazel-linux:latest
 WORKDIR /app
+RUN sed -i 's#http://archive.ubuntu.com/#http://mirrors.tuna.tsinghua.edu.cn/#' /etc/apt/sources.list;
+RUN apt-get update
 RUN apt-get install -y python python3
 COPY WORKSPACE ./
 COPY data ./data
 COPY scripts ./scripts
 COPY src/third_party ./src/third_party
+
+#We copy the third party packages into containers
+COPY src/manual_3 ./src/manual_3
 
 # Build and cache protos generated code
 COPY src/protos ./src/protos

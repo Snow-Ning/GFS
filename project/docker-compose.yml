@@ -17,6 +17,9 @@ services:
     volumes:
       - ./:/app
     restart: unless-stopped
+    networks: 
+      mynetwork:
+        ipv4_address: 172.19.1.5
   # Start chunk server #1 on port 50052
   chunk_server_01:
     container_name: chunk_server_01
@@ -33,6 +36,9 @@ services:
     volumes:
       - ./:/app
     restart: unless-stopped
+    networks: 
+      mynetwork: 
+        ipv4_address: 172.19.1.6
   # Start chunk server #2 on port 50053
   chunk_server_02:
     container_name: chunk_server_02
@@ -49,6 +55,9 @@ services:
     volumes:
       - ./:/app
     restart: unless-stopped
+    networks: 
+      mynetwork: 
+        ipv4_address: 172.19.1.7
   # Start chunk server #3 on port 50054
   chunk_server_03:
     container_name: chunk_server_03
@@ -65,3 +74,12 @@ services:
     volumes:
       - ./:/app
     restart: unless-stopped
+    networks: 
+      mynetwork: 
+        ipv4_address: 172.19.1.8
+networks:
+  mynetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "172.19.1.0/16"
